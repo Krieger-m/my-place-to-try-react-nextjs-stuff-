@@ -4,7 +4,7 @@ import { SetStateAction, useState } from "react";
 import { NewProduct } from "./NewProduct";
 import { Productcard } from "./ProductCard";
 
-interface Product {
+interface ProductProps {
   productName: string;
   productDescription: string;
   isbn: string;
@@ -12,10 +12,16 @@ interface Product {
 }
 
 interface ProductListProps {
-  data: Product[];
+  data: ProductProps[];
 }
 
 export function ProductList({ data,  }: ProductListProps) {
+
+  const [ productList, setProductList ] = useState(data);
+
+  function addProductHandler(productData:ProductProps){
+    setProductList([productData, ...productList])
+  }
   
 
   return (
@@ -31,7 +37,7 @@ export function ProductList({ data,  }: ProductListProps) {
             marginBottom: 40,
           }}
         >
-          <NewProduct          />
+          <NewProduct onAddProduct={addProductHandler}/>
           
         </div>
       )}
@@ -44,7 +50,7 @@ export function ProductList({ data,  }: ProductListProps) {
           justifyContent: "center",
         }}
       >
-        {data.map((item: Product, index: number) => (
+        {productList.map((item: ProductProps, index: number) => (
           <div key={index}>
             <Productcard {...item} />
           </div>

@@ -32,7 +32,7 @@ export default async function Page() {
         <div style={{display: 'flex',flexDirection: 'row', justifyContent: 'space-evenly'}}>
           <h1>Products: </h1>
         </div>
-        <ProductList data={products} />
+        <ProductList data={[...products]} />
           
             
         

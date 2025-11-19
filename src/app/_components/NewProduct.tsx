@@ -4,7 +4,7 @@ import { NodeEventTarget } from "events";
 import { ChangeEventHandler, isValidElement, useState } from "react";
 import { Productcard } from "./ProductCard";
 
-export function NewProduct() {
+export function NewProduct(props: { onAddProduct: any }) {
   //styles
   const labelStyle = {
     display: "block",
@@ -36,7 +36,6 @@ export function NewProduct() {
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
-
   // handlers
   function productNameChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -66,36 +65,43 @@ export function NewProduct() {
     setEnteredProductPrice(event.target.value);
   }
 
-  function isVisibleHandler(){
-    setIsVisible(!isVisible)
+  function isVisibleHandler() {
+    setIsVisible(!isVisible);
   }
 
-  function cancelHandler(event: { preventDefault: () => void; }){
+  function resetState() {
+    setEnteredProductDescription("");
+    setEnteredProductName("");
+    setEnteredProductIsbn("");
+    setEnteredProductPrice("");
+  }
+
+  function cancelHandler(event: { preventDefault: () => void }) {
     event.preventDefault();
     setIsVisible(false);
-    setEnteredProductDescription('');
-    setEnteredProductName('');
-    setEnteredProductIsbn('');
-    setEnteredProductPrice('');
+    resetState();
   }
 
   function submitHandler(event: { preventDefault: () => void }) {
     event.preventDefault();
     const productData = {
-      name: enteredProductName,
-      description: enteredProductDescription,
+      productName: enteredProductName,
+      productDescription: enteredProductDescription,
       isbn: enteredProductIsbn,
       price: enteredProductPrice,
     };
-    console.log('productData');
+    props.onAddProduct(productData);
+    console.log("productData");
     console.log(productData);
     isVisibleHandler();
+    resetState();
   }
-
 
   return (
     <>
-      <button style={{ marginTop: 40, padding:10}} onClick={isVisibleHandler}>{isVisible ?'Close':'Add Product'}</button>
+      <button style={{ marginTop: 40, padding: 10 }} onClick={isVisibleHandler}>
+        {isVisible ? "Close" : "Add Product"}
+      </button>
 
       {isVisible && (
         <>
@@ -149,15 +155,25 @@ export function NewProduct() {
               />
             </p>
             <p>
-              <button style={{padding:10, marginRight: 20}} type="button" onClick={cancelHandler}>Cancel</button>
-              <button style={{padding:10}} onClick={submitHandler}>Submit</button>
+              <button
+                style={{ padding: 10, marginRight: 20 }}
+                type="button"
+                onClick={cancelHandler}
+              >
+                Cancel
+              </button>
+              <button style={{ padding: 10 }} onClick={submitHandler}>
+                Submit
+              </button>
             </p>
           </form>
           <Productcard
-            productName={enteredProductName ||'default title'}
-            productDescription={enteredProductDescription ||'default description'}
-            isbn={enteredProductIsbn || '000-0-000-00000-0'}
-            price={enteredProductPrice || '0.0'}
+            productName={enteredProductName || "default title"}
+            productDescription={
+              enteredProductDescription || "default description"
+            }
+            isbn={enteredProductIsbn || "000-0-000-00000-0"}
+            price={enteredProductPrice || "0.0"}
           />
         </>
       )}
