@@ -1,7 +1,7 @@
 "use client";
 
 import { NodeEventTarget } from "events";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, isValidElement, useState } from "react";
 import { Productcard } from "./ProductCard";
 
 export function NewProduct() {
@@ -31,97 +31,136 @@ export function NewProduct() {
   // state
   const [enteredProductName, setEnteredProductName] = useState("");
   const [enteredProductDescription, setEnteredProductDescription] =
-  useState("");
+    useState("");
   const [enteredProductIsbn, setEnteredProductIsbn] = useState("");
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
-  
+  const [isVisible, setIsVisible] = useState(false);
+
+
   // handlers
-    function productNameChangeHandler(
-      event: React.ChangeEvent<HTMLInputElement>
-    ) {
-      console.log(event.target.value);
-      setEnteredProductName(event.target.value);
-    }
-  
-    function productDescriptionChangeHandler(
-      event: React.ChangeEvent<HTMLTextAreaElement>
-    ) {
-      console.log(event.target.value);
-      setEnteredProductDescription(event.target.value);
-    }
-  
-    function productIsbnChangeHandler(
-      event: React.ChangeEvent<HTMLInputElement>
-    ) {
-      console.log(event.target.value);
-      setEnteredProductIsbn(event.target.value);
-    }
-  
-    function productPriceChangeHandler(
-      event: React.ChangeEvent<HTMLInputElement>
-    ) {
-      console.log(event.target.value);
-      setEnteredProductPrice(event.target.value);
-    }
+  function productNameChangeHandler(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    console.log(event.target.value);
+    setEnteredProductName(event.target.value);
+  }
+
+  function productDescriptionChangeHandler(
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) {
+    console.log(event.target.value);
+    setEnteredProductDescription(event.target.value);
+  }
+
+  function productIsbnChangeHandler(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    console.log(event.target.value);
+    setEnteredProductIsbn(event.target.value);
+  }
+
+  function productPriceChangeHandler(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    console.log(event.target.value);
+    setEnteredProductPrice(event.target.value);
+  }
+
+  function isVisibleHandler(){
+    setIsVisible(!isVisible)
+  }
+
+  function cancelHandler(event: { preventDefault: () => void; }){
+    event.preventDefault();
+    setIsVisible(false);
+    setEnteredProductDescription('');
+    setEnteredProductName('');
+    setEnteredProductIsbn('');
+    setEnteredProductPrice('');
+  }
+
+  function submitHandler(event: { preventDefault: () => void }) {
+    event.preventDefault();
+    const productData = {
+      name: enteredProductName,
+      description: enteredProductDescription,
+      isbn: enteredProductIsbn,
+      price: enteredProductPrice,
+    };
+    console.log('productData');
+    console.log(productData);
+    isVisibleHandler();
+  }
+
 
   return (
     <>
-      <form style={formStyle}>
-        <p>
-          <label style={labelStyle} htmlFor="productName">
-            Product name:{" "}
-          </label>
-          <input
-            style={inputStyle}
-            type="text"
-            id="productName"
-            required
-            onChange={productNameChangeHandler}
+      <button style={{ marginTop: 40, padding:10}} onClick={isVisibleHandler}>{isVisible ?'Close':'Add Product'}</button>
+
+      {isVisible && (
+        <>
+          <form style={formStyle} onSubmit={submitHandler}>
+            <p>
+              <label style={labelStyle} htmlFor="productName">
+                Product name:{" "}
+              </label>
+              <input
+                style={inputStyle}
+                type="text"
+                id="productName"
+                required
+                onChange={productNameChangeHandler}
+              />
+            </p>
+            <p>
+              <label style={labelStyle} htmlFor="productDescription">
+                Product description:{" "}
+              </label>
+              <textarea
+                style={inputStyle}
+                id="productDescription"
+                required
+                rows={6}
+                onChange={productDescriptionChangeHandler}
+              />
+            </p>
+            <p>
+              <label style={labelStyle} htmlFor="isbn">
+                Item no:{" "}
+              </label>
+              <input
+                style={inputStyle}
+                type="text"
+                id="isbn"
+                required
+                onChange={productIsbnChangeHandler}
+              />
+            </p>
+            <p>
+              <label style={labelStyle} htmlFor="price">
+                Price:{" "}
+              </label>
+              <input
+                style={inputStyle}
+                type="text"
+                id="price"
+                required
+                onChange={productPriceChangeHandler}
+              />
+            </p>
+            <p>
+              <button style={{padding:10, marginRight: 20}} type="button" onClick={cancelHandler}>Cancel</button>
+              <button style={{padding:10}} onClick={submitHandler}>Submit</button>
+            </p>
+          </form>
+          <Productcard
+            productName={enteredProductName ||'default title'}
+            productDescription={enteredProductDescription ||'default description'}
+            isbn={enteredProductIsbn || '000-0-000-00000-0'}
+            price={enteredProductPrice || '0.0'}
           />
-        </p>
-        <p>
-          <label style={labelStyle} htmlFor="productDescription">
-            Product description:{" "}
-          </label>
-          <textarea
-            style={inputStyle}
-            id="productDescription"
-            required
-            rows={6}
-            onChange={productDescriptionChangeHandler}
-          />
-        </p>
-        <p>
-          <label style={labelStyle} htmlFor="isbn">
-            Item no:{" "}
-          </label>
-          <input
-            style={inputStyle}
-            type="text"
-            id="isbn"
-            required
-            onChange={productIsbnChangeHandler}
-          />
-        </p>
-        <p>
-          <label style={labelStyle} htmlFor="price">
-            Price:{" "}
-          </label>
-          <input
-            style={inputStyle}
-            type="text"
-            id="price"
-            required
-            onChange={productPriceChangeHandler}
-          />
-        </p>
-      </form>
-      <Productcard
-            productName={enteredProductName}
-            productDescription={enteredProductDescription}
-            isbn={enteredProductIsbn}
-            price={enteredProductPrice}
-          />
+        </>
+      )}
     </>
   );
 }

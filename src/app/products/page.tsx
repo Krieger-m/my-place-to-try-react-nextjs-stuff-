@@ -31,7 +31,6 @@ export default async function Page() {
         <br />
         <div style={{display: 'flex',flexDirection: 'row', justifyContent: 'space-evenly'}}>
           <h1>Products: </h1>
-          <button >Add Product</button>
         </div>
         <ProductList data={products} />
           
