@@ -23,19 +23,6 @@ export function ProductList({ data }: ProductListProps) {
   const [productList, setProductList] = useState(data);
   // console.log('productList: ');
   // console.log(productList);
-  const [isFetching, setIsFetching] = useState(false);
-
-  // fetching data inside the client component using useEffect
-  useEffect(() => {
-    async function fetchProducts() {
-      setIsFetching(true);
-      const res = await fetch("http://localhost:8088/products");
-      const productData = await res.json();
-      setProductList(productData.storedProducts);
-      setIsFetching(false);
-    }
-    fetchProducts();
-  }, []);
 
   function addProductHandler(productData: ProductProps) {
     // using fetch to do a post request
@@ -81,28 +68,14 @@ export function ProductList({ data }: ProductListProps) {
           justifyContent: "center",
         }}
       >
-        {!isFetching &&
-          productList.length > 0 &&
+        {productList.length > 0 &&
           productList.map((item: ProductProps, index: number) => (
             <div key={index}>
               <Productcard {...item} />
             </div>
           ))}
-        {isFetching && (
-          <div
-            style={{
-              backgroundColor: "#f7ab39",
-              padding: "1rem",
-              width: "20rem",
-              margin: "2rem auto",
-              borderRadius: 6,
-              boxShadow: "0 2px 8px #ffffffff",
-            }}
-          >
-            <h2>Fetching the Products ...</h2>
-          </div>
-        )}
-        {!isFetching && productList.length <= 0 && (
+       
+        {productList.length <= 0 && (
           <div
             style={{
               backgroundColor: "#f7ab39",
