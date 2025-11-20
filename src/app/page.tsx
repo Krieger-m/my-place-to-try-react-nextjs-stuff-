@@ -18,6 +18,7 @@ export default async function Home() {
           alt="no alt text"
           height={1036}
           width={1024}
+          loading="eager"
           style={{
             width: '200vw',
             height: '80vh',
