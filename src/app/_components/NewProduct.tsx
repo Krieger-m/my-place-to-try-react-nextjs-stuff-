@@ -175,7 +175,7 @@ export function NewProduct(props: { onAddProduct: any }) {
             isbn={enteredProductIsbn || "000-0-000-00000-0"}
             price={enteredProductPrice || "0.0"}
           />
-          <div style={{height: 2, backgroundColor: '#fff'}}></div>
+          <div style={{ height: 2, backgroundColor: "#fff" }}></div>
         </>
       )}
     </>

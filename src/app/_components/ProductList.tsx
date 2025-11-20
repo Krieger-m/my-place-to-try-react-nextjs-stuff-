@@ -15,18 +15,23 @@ interface ProductListProps {
   data: ProductProps[];
 }
 
-export function ProductList({ data,  }: ProductListProps) {
-
-  const [ productList, setProductList ] = useState(data);
-
-  function addProductHandler(productData:ProductProps){
-    setProductList((existingProducts) =>[productData, ...existingProducts])
-  }
+export function ProductList({ data }: ProductListProps) {
   
+  const [productList, setProductList] = useState(data);
+
+  function addProductHandler(productData: ProductProps) {
+    setProductList((existingProducts) => [productData, ...existingProducts]);
+  }
 
   return (
-    <div style={{ border: "2px solid #ff9100ff", borderRadius: 5, paddingBottom: 40 }}>
-      { (
+    <div
+      style={{
+        border: "2px solid #ff9100ff",
+        borderRadius: 5,
+        paddingBottom: 40,
+      }}
+    >
+      {
         <div
           style={{
             margin: "auto",
@@ -37,10 +42,9 @@ export function ProductList({ data,  }: ProductListProps) {
             marginBottom: 40,
           }}
         >
-          <NewProduct onAddProduct={addProductHandler}/>
-          
+          <NewProduct onAddProduct={addProductHandler} />
         </div>
-      )}
+      }
       <div
         style={{
           margin: "auto",

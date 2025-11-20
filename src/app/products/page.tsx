@@ -1,4 +1,4 @@
-'use cache';
+"use cache";
 import Image from "next/image";
 import styles from "../page.module.css";
 import { promises as fs } from "fs";
@@ -8,35 +8,32 @@ import { ProductList } from "../_components/ProductList";
 import { NewProduct } from "../_components/NewProduct";
 import { getProducts } from "../data/getProducts";
 
-
-
 export default async function Page() {
+
+    // caching experiment
   cacheLife({
-      stale: 3600, 
-      revalidate: 90000, 
-      expire: 864000, 
-    },);
-
-  
-
-  // console.log(data);
+    stale: 3600,
+    revalidate: 90000,
+    expire: 864000,
+  });
 
   const products = await getProducts();
   // console.log(products)
 
-
   return (
-  
     <div className={styles.page}>
       <main className={styles.main}>
         <br />
-        <div style={{display: 'flex',flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
           <h1>Products: </h1>
         </div>
         <ProductList data={[...products.storedProducts]} />
-          
-            
-        
       </main>
     </div>
   );
