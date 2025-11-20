@@ -6,6 +6,7 @@ import { Productcard } from "./ProductCard";
 import addIcon from '../../../public/icons8-add-properties-50.png'
 import closeIcon from '../../../public/icons8-close-30.png'
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export function NewProduct(props: { onAddProduct: any }) {
   //styles
@@ -69,8 +70,10 @@ export function NewProduct(props: { onAddProduct: any }) {
     setEnteredProductPrice(event.target.value);
   }
 
+  const router = useRouter()
   function isVisibleHandler() {
     setIsVisible(!isVisible);
+    !isVisible ?router.push('?adding'):isVisible ?router.push(''):'';
   }
 
   function resetState() {

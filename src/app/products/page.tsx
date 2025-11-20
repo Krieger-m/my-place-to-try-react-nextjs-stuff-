@@ -33,7 +33,22 @@ export default async function Page() {
         >
           <h1>Products: </h1>
         </div>
-        <Suspense fallback={<p>Loading products...</p>}>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                backgroundColor: "#f7ab39",
+                padding: "1rem",
+                width: "20rem",
+                margin: "2rem auto",
+                borderRadius: 6,
+                boxShadow: "0 2px 8px #ffffffff",
+              }}
+            >
+              <h2>Fetching the products ...</h2>
+            </div>
+          }
+        >
           <ProductList data={[...products.storedProducts]} />
         </Suspense>
       </main>

@@ -10,6 +10,8 @@ export async function getProducts() {
     // dummy backend api
   const res = await fetch("http://localhost:8088/products");
   const productData = await res.json();
+  // await new Promise<void>((resolve, reject) => setTimeout(() => resolve(), 1500));
+
   return await productData;
 
     // file based backend via faker.json
