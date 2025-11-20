@@ -13,14 +13,13 @@ interface ProductProps {
 }
 
 interface ProductListProps {
-  data: ProductProps[];
+  data?: ProductProps[];
 }
 
 export function ProductList({ data }: ProductListProps) {
   // console.log('data: ');
   // console.log(data);
 
-  const [productList, setProductList] = useState(data);
   // console.log('productList: ');
   // console.log(productList);
   const [isFetching, setIsFetching] = useState(false);
@@ -37,9 +36,11 @@ export function ProductList({ data }: ProductListProps) {
     fetchProducts();
   }, []);
 
+  const [productList, setProductList] = useState<ProductProps[]>([]); // using empty array instead of data passed from the parent
+
   function addProductHandler(productData: ProductProps) {
     // using fetch to do a post request
-    fetch("http://localhost:8088/products", {
+    const response = fetch("http://localhost:8088/products", {
       // defining the fetch options
       method: "POST",
       body: JSON.stringify(productData),

@@ -17,7 +17,7 @@ export default async function Page() {
   //   expire: 60,
   // });
 
-  const products = await getProducts();
+  // const products = await getProducts();
   // console.log(products)
 
   return (
@@ -34,7 +34,7 @@ export default async function Page() {
           <h1>Products: </h1>
         </div>
         <Suspense fallback={<p>Loading products...</p>}>
-          <ProductList data={[...products.storedProducts]} />
+          <ProductList  />
         </Suspense>
       </main>
     </div>
