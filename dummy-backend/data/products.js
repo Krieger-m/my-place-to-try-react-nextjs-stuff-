@@ -4,7 +4,7 @@ async function getStoredProducts() {
   const rawFileContent = await fs.readFile('products.json', { encoding: 'utf-8' });
   const data = JSON.parse(rawFileContent);
   const storedProducts = data.products ?? [];
-  console.log(storedProducts)
+  // console.log(storedProducts)
   return storedProducts;
 }
 

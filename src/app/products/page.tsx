@@ -1,4 +1,4 @@
-"use cache";
+// "use cache";
 import Image from "next/image";
 import styles from "../page.module.css";
 import { promises as fs } from "fs";
@@ -7,15 +7,15 @@ import { cacheLife } from "next/cache";
 import { ProductList } from "../_components/ProductList";
 import { NewProduct } from "../_components/NewProduct";
 import { getProducts } from "../data/getProducts";
+import { Suspense } from "react";
 
 export default async function Page() {
-
-    // caching experiment
-  cacheLife({
-    stale: 3600,
-    revalidate: 90000,
-    expire: 864000,
-  });
+  // caching experiment
+  // cacheLife({
+  //   stale: 30,
+  //   revalidate: 60,
+  //   expire: 60,
+  // });
 
   const products = await getProducts();
   // console.log(products)
@@ -28,12 +28,14 @@ export default async function Page() {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-evenly",
+            justifyContent: "space-evenlsy",
           }}
         >
           <h1>Products: </h1>
         </div>
-        <ProductList data={[...products.storedProducts]} />
+        <Suspense fallback={<p>Loading products...</p>}>
+          <ProductList data={[...products.storedProducts]} />
+        </Suspense>
       </main>
     </div>
   );

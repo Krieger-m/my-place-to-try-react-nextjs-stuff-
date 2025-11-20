@@ -40,28 +40,28 @@ export function NewProduct(props: { onAddProduct: any }) {
   function productNameChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setEnteredProductName(event.target.value);
   }
 
   function productDescriptionChangeHandler(
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setEnteredProductDescription(event.target.value);
   }
 
   function productIsbnChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setEnteredProductIsbn(event.target.value);
   }
 
   function productPriceChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setEnteredProductPrice(event.target.value);
   }
 
@@ -91,7 +91,7 @@ export function NewProduct(props: { onAddProduct: any }) {
       price: enteredProductPrice,
     };
     props.onAddProduct(productData);
-    console.log("productData");
+    console.log("entered product data: ");
     console.log(productData);
     isVisibleHandler();
     resetState();
@@ -99,10 +99,6 @@ export function NewProduct(props: { onAddProduct: any }) {
 
   return (
     <>
-      <button style={{ marginTop: 40, padding: 10 }} onClick={isVisibleHandler}>
-        {isVisible ? "Close" : "Add Product"}
-      </button>
-
       {isVisible && (
         <>
           <form style={formStyle} onSubmit={submitHandler}>
@@ -154,7 +150,7 @@ export function NewProduct(props: { onAddProduct: any }) {
                 onChange={productPriceChangeHandler}
               />
             </p>
-            <p>
+            <p style={inputStyle}>
               <button
                 style={{ padding: 10, marginRight: 20 }}
                 type="button"
@@ -178,6 +174,9 @@ export function NewProduct(props: { onAddProduct: any }) {
           <div style={{ height: 2, backgroundColor: "#fff" }}></div>
         </>
       )}
+      <button style={{ padding: 10 }} onClick={isVisibleHandler}>
+        {isVisible ? "Close" : "Add Product"}
+      </button>
     </>
   );
 }
