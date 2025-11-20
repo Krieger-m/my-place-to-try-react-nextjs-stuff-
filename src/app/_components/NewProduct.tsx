@@ -3,6 +3,9 @@
 import { NodeEventTarget } from "events";
 import { ChangeEventHandler, isValidElement, useState } from "react";
 import { Productcard } from "./ProductCard";
+import addIcon from '../../../public/icons8-add-properties-50.png'
+import closeIcon from '../../../public/icons8-close-30.png'
+import Image from "next/image";
 
 export function NewProduct(props: { onAddProduct: any }) {
   //styles
@@ -28,12 +31,13 @@ export function NewProduct(props: { onAddProduct: any }) {
     boxShadow: "0 2px 8px #ffffffff",
   };
 
-  // state
+   // state
   const [enteredProductName, setEnteredProductName] = useState("");
   const [enteredProductDescription, setEnteredProductDescription] =
     useState("");
   const [enteredProductIsbn, setEnteredProductIsbn] = useState("");
   const [enteredProductPrice, setEnteredProductPrice] = useState("");
+
   const [isVisible, setIsVisible] = useState(false);
 
   // handlers
@@ -174,8 +178,16 @@ export function NewProduct(props: { onAddProduct: any }) {
           <div style={{ height: 2, backgroundColor: "#fff" }}></div>
         </>
       )}
-      <button style={{ padding: 10 }} onClick={isVisibleHandler}>
-        {isVisible ? "Close" : "Add Product"}
+      <button style={{ padding: 10 , fontSize: 18,display: 'flex', alignItems: 'center'}} onClick={isVisibleHandler}>
+        <Image
+          src={isVisible?closeIcon:addIcon}
+          alt='no alt text'
+          width={15}
+          height={15}
+          style={{marginRight: 10,}}
+
+        />
+        <p>{isVisible ? "Close" : "Add Product"}</p>
       </button>
     </>
   );

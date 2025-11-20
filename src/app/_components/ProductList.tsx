@@ -16,38 +16,37 @@ interface ProductListProps {
   data: ProductProps[];
 }
 
-
 export function ProductList({ data }: ProductListProps) {
+  // console.log('data: ');
+  // console.log(data);
 
-    // fetching data inside the client component using useEffect
-  useEffect(()=>{
-    async function fetchProducts(){
+  const [productList, setProductList] = useState(data);
+  // console.log('productList: ');
+  // console.log(productList);
+  const [isFetching, setIsFetching] = useState(false);
+
+  // fetching data inside the client component using useEffect
+  useEffect(() => {
+    async function fetchProducts() {
+      setIsFetching(true);
       const res = await fetch("http://localhost:8088/products");
       const productData = await res.json();
       setProductList(productData.storedProducts);
-    };
+      setIsFetching(false);
+    }
     fetchProducts();
-  }, [] );
-
-  
-  // console.log('data: ');
-  // console.log(data);
-  
-  const [productList, setProductList] = useState(data);
-  
-  // console.log('productList: ');
-  // console.log(productList);
+  }, []);
 
   function addProductHandler(productData: ProductProps) {
-    // using fetch to do a post request 
-    fetch('http://localhost:8088/products', {
+    // using fetch to do a post request
+    fetch("http://localhost:8088/products", {
       // defining the fetch options
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(productData),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
     setProductList((existingProducts) => [productData, ...existingProducts]);
   }
 
@@ -70,7 +69,6 @@ export function ProductList({ data }: ProductListProps) {
             marginBottom: 40,
           }}
         >
-          
           <NewProduct onAddProduct={addProductHandler} />
         </div>
       }
@@ -83,11 +81,42 @@ export function ProductList({ data }: ProductListProps) {
           justifyContent: "center",
         }}
       >
-        {productList.map((item: ProductProps, index: number) => (
-          <div key={index}>
-            <Productcard {...item} />
+        {!isFetching &&
+          productList.length > 0 &&
+          productList.map((item: ProductProps, index: number) => (
+            <div key={index}>
+              <Productcard {...item} />
+            </div>
+          ))}
+        {isFetching && (
+          <div
+            style={{
+              backgroundColor: "#f7ab39",
+              padding: "1rem",
+              width: "20rem",
+              margin: "2rem auto",
+              borderRadius: 6,
+              boxShadow: "0 2px 8px #ffffffff",
+            }}
+          >
+            <h2>Fetching the Products ...</h2>
           </div>
-        ))}
+        )}
+        {!isFetching && productList.length <= 0 && (
+          <div
+            style={{
+              backgroundColor: "#f7ab39",
+              padding: "1rem",
+              width: "20rem",
+              margin: "2rem auto",
+              borderRadius: 6,
+              boxShadow: "0 2px 8px #ffffffff",
+            }}
+          >
+            <h2>No Products :(</h2>
+            <p>start adding some!</p>
+          </div>
+        )}
       </div>
     </div>
   );
