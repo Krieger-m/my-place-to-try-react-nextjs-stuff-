@@ -15,7 +15,7 @@ export function Productcard({
 }:ProductCardProps){
     return(
         <>
-            <div style={{border: '1px solid white', borderRadius:10, padding:20, width: 300, }}>
+            <div style={{border: '1px solid white', borderRadius:10, padding:20, width: 300, backgroundColor: '#363634ff'}}>
                 <h3>{productName}</h3>
                 <br/>
                 <p>{productDescription}</p>

@@ -20,12 +20,12 @@ export function ProductList({ data,  }: ProductListProps) {
   const [ productList, setProductList ] = useState(data);
 
   function addProductHandler(productData:ProductProps){
-    setProductList([productData, ...productList])
+    setProductList((existingProducts) =>[productData, ...existingProducts])
   }
   
 
   return (
-    <div style={{ border: "2px solid red", borderRadius: 5 }}>
+    <div style={{ border: "2px solid #ff9100ff", borderRadius: 5 }}>
       { (
         <div
           style={{

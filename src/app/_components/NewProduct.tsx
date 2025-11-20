@@ -20,7 +20,7 @@ export function NewProduct(props: { onAddProduct: any }) {
   };
 
   const formStyle = {
-    backgroundColor: "#5d6e6dff",
+    backgroundColor: "#f7ab39",
     padding: "1rem",
     width: "20rem",
     margin: "2rem auto",
