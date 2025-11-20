@@ -25,7 +25,7 @@ export function ProductList({ data,  }: ProductListProps) {
   
 
   return (
-    <div style={{ border: "2px solid #ff9100ff", borderRadius: 5 }}>
+    <div style={{ border: "2px solid #ff9100ff", borderRadius: 5, paddingBottom: 40 }}>
       { (
         <div
           style={{

@@ -22,6 +22,7 @@ export default async function Page() {
   // console.log(data);
 
   const products = await getProducts();
+  // console.log(products)
 
 
   return (
@@ -32,7 +33,7 @@ export default async function Page() {
         <div style={{display: 'flex',flexDirection: 'row', justifyContent: 'space-evenly'}}>
           <h1>Products: </h1>
         </div>
-        <ProductList data={[...products]} />
+        <ProductList data={[...products.storedProducts]} />
           
             
         
